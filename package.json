@@ -1,0 +1,31 @@
+{
+  "name": "seo-command-center",
+  "version": "0.0.1",
+  "description": "Agent-Driven AI Documentation System with Next.js, Turborepo, and Vercel AI SDK",
+  "private": true,
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean && rm -rf node_modules"
+  },
+  "keywords": [
+    "next.js",
+    "turborepo",
+    "ai",
+    "documentation",
+    "monorepo"
+  ],
+  "author": "Warp",
+  "license": "MIT",
+  "packageManager": "pnpm@10.24.0",
+  "engines": {
+    "node": ">=20.9",
+    "pnpm": ">=8"
+  },
+  "devDependencies": {
+    "turbo": "latest"
+  }
+}

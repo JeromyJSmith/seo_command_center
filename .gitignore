@@ -1,0 +1,16 @@
+
+# Turbo
+.turbo/
+
+# OS
+.DS_Store
+.DS_Store?
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+*~
+
+# Lock files (keep only root)
+apps/*/pnpm-lock.yaml
+packages/*/pnpm-lock.yaml
