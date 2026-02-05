@@ -14,3 +14,13 @@
 # Lock files (keep only root)
 apps/*/pnpm-lock.yaml
 packages/*/pnpm-lock.yaml
+
+# Dependencies
+node_modules/
+*.pnpm-debug.log
+.pnpm-store/
+
+# Build outputs
+.next/
+dist/
+build/

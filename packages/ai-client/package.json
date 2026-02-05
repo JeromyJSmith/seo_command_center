@@ -6,6 +6,7 @@
     ".": "./src/index.ts"
   },
   "dependencies": {
+    "@repo/core": "workspace:*",
     "ai": "^6.0.0",
     "zod": "^4.0.0"
   },
