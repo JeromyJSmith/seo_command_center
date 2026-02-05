@@ -4,7 +4,7 @@ import { FileManifest } from '@repo/core';
 import fs from 'fs/promises';
 import path from 'path';
 
-const aiClient = new AIClient();
+const aiClient = new AIClient({});
 
 export async function POST(request: NextRequest) {
   try {

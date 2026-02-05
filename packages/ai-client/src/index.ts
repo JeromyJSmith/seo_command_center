@@ -1,11 +1,12 @@
 // Vercel AI SDK Client
-// Wrapper for AI Gateway integration
+// Wrapper for AI Gateway integration with Claude API
 
 import { generateText, streamText, LanguageModel } from 'ai'
 import { z } from 'zod'
+import { FileManifest, FolderNode } from '@repo/core'
 
 export interface AIClientConfig {
-  apiKey: string
+  apiKey?: string
   model?: string
 }
 
@@ -13,38 +14,77 @@ export class AIClient {
   private apiKey: string
   private model: string
 
-  constructor(config: AIClientConfig) {
-    this.apiKey = config.apiKey
-    this.model = config.model || 'openai/gpt-4-turbo'
+  constructor(config: AIClientConfig = {}) {
+    this.apiKey = config.apiKey || process.env.AI_GATEWAY_API_KEY || ''
+    this.model = config.model || 'anthropic/claude-3-5-sonnet'
+  }
+
+  private buildFileTree(nodes: FolderNode[], indent = 0): string {
+    let tree = ''
+    for (const node of nodes) {
+      const prefix = '  '.repeat(indent)
+      if (node.type === 'file') {
+        tree += `${prefix}├── ${node.name}\n`
+      } else {
+        tree += `${prefix}├── ${node.name}/\n`
+        if (node.children) {
+          tree += this.buildFileTree(node.children, indent + 1)
+        }
+      }
+    }
+    return tree
   }
 
   async generateReadme(folderInfo: {
-    name: string
-    description: string
-    files: string[]
+    folderPath: string
+    manifest: FileManifest
   }): Promise<string> {
-    const prompt = `Generate a README.agent.md file for a folder with the following information:
+    const { folderPath, manifest } = folderInfo
+    const folderName = folderPath.split('/').pop() || 'Project'
+    const fileTree = this.buildFileTree(manifest.structure)
 
-Folder Name: ${folderInfo.name}
-Description: ${folderInfo.description}
-Files: ${folderInfo.files.join(', ')}
+    const prompt = `You are an AI documentation specialist. Generate a comprehensive README.agent.md file for the following folder structure. This documentation should help AI agents understand the purpose, structure, and usage of this folder.
 
-The README should include:
-1. Purpose - What this folder contains and why
-2. Agent Usage - How AI agents should interact with this folder
-3. Contents - Key files and structure
-4. Tools Available - Any scripts or resources
-5. Dependencies - Relationships to other folders
+Folder Name: ${folderName}
+Folder Path: ${folderPath}
 
-Format as markdown.`
+Folder Statistics:
+- Total Files: ${manifest.totalFiles}
+- Total Directories: ${manifest.totalDirectories}
+- File Types: ${Object.entries(manifest.filesByType).map(([type, count]) => `${type} (${count})`).join(', ')}
+
+Folder Structure:
+\`\`\`
+${fileTree}
+\`\`\`
+
+Generate a detailed README.agent.md with the following sections:
+
+1. **Purpose**: A brief description of what this folder contains and its primary function.
+2. **Agent Usage**: How AI agents should interact with files in this folder, any conventions to follow.
+3. **Contents**: Detailed breakdown of key directories and files, their purposes, and relationships.
+4. **File Organization**: Best practices for organizing files in this folder.
+5. **Dependencies**: Any external dependencies or relationships to other folders.
+6. **Integration Points**: Key entry points or interfaces for integration with other systems.
+7. **Notes for AI Systems**: Any special considerations for AI agents when working with this folder.
+
+Format the response as clean, well-structured markdown with proper heading hierarchy. Be specific to the actual file structure provided.`
 
     const result = await generateText({
       model: this.model as unknown as LanguageModel,
       prompt,
-      apiKey: this.apiKey,
     })
 
-    return result.text
+    // Wrap with frontmatter
+    const frontmatter = `---
+generated: ${new Date().toISOString()}
+folder: ${folderName}
+path: ${folderPath}
+---
+
+`
+
+    return frontmatter + result.text
   }
 
   async* streamFolderAnalysis(folderPath: string) {
@@ -53,7 +93,6 @@ Format as markdown.`
     const stream = await streamText({
       model: this.model as unknown as LanguageModel,
       prompt,
-      apiKey: this.apiKey,
     })
 
     for await (const chunk of stream.textStream) {

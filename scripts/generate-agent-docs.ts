@@ -49,7 +49,7 @@ async function main() {
 
     // Generate documentation
     console.log('\n🤖 Generating AI documentation...')
-    const aiClient = new AIClient()
+    const aiClient = new AIClient({})
     const readmeContent = await aiClient.generateReadme({
       folderPath,
       manifest,
