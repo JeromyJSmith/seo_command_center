@@ -92,7 +92,9 @@ That's a **content audit**. Automated. In real-time. Was that illegible? Let's r
 
 ### AI-Powered Documentation for E-E-A-T
 
-Google's [E-E-A-T guidelines](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) (Experience, Expertise, Authoritativeness, Trustworthiness) reward well-documented, well-organized content. [Search Engine Journal's breakdown of E-E-A-T](https://www.searchenginejournal.com/google-eat/) emphasizes that demonstrating expertise includes having clear, structured content architecture.
+Google's [E-E-A-T guidelines](https://developers.google.com/search/docs/fundamentals/creating-helpful-content) (Experience, Expertise, Authoritativeness, Trustworthiness) reward well-documented, well-organized content. Google rolled out **12 confirmed algorithm updates** between 2024 and 2025, and E-E-A-T signals now determine who ranks for competitive queries. The [December 2025 Core Update](https://www.dataslayer.ai/blog/google-core-update-december-2025-what-changed-and-how-to-fix-your-rankings) specifically rewarded original content and penalized thin, undocumented pages — emphasizing the "Experience" pillar of E-E-A-T.
+
+[Search Engine Journal's breakdown of E-E-A-T](https://www.searchenginejournal.com/google-eat/) emphasizes that demonstrating expertise includes having clear, structured content architecture. **Trust** is now the most important pillar according to Google's own [Search Quality Evaluator Guidelines](https://static.googleusercontent.com/media/guidelines.raterhub.com/en//searchqualityevaluatorguidelines.pdf). Credibility outweighs keyword density. Read that again.
 
 This tool generates `README.agent.md` files that include:
 
@@ -396,11 +398,22 @@ You now have a complete manifest of every piece of content, organized by type, w
 
 ### 3. Core Web Vitals & Performance Monitoring
 
-While this tool doesn't directly measure [Core Web Vitals](https://web.dev/vitals/) (that's what [Google PageSpeed Insights](https://pagespeed.web.dev/) and [Lighthouse](https://developer.chrome.com/docs/lighthouse/) are for), it complements those tools by:
+Let's talk numbers, since some people need things quantified before they believe them. [Core Web Vitals](https://web.dev/vitals/) are the three metrics Google uses to measure user experience:
+
+| Metric | What It Measures | Target | Current Pass Rate |
+|---|---|---|---|
+| **LCP** (Largest Contentful Paint) | Loading speed | Under 2.5 seconds | ~47-54% of sites pass |
+| **INP** (Interaction to Next Paint) | Responsiveness | Under 200ms | Sites with poor INP (>300ms) saw **31% more traffic drops** in Dec 2025 |
+| **CLS** (Cumulative Layout Shift) | Visual stability | Under 0.1 | ~47-54% of sites pass |
+
+*(INP replaced FID in March 2024, per [Google's announcement](https://developers.google.com/search/docs/appearance/core-web-vitals). If you're still optimizing for FID, well... that tracks.)*
+
+While this tool doesn't directly measure Core Web Vitals (that's what [Google PageSpeed Insights](https://pagespeed.web.dev/) and [Lighthouse](https://developer.chrome.com/docs/lighthouse/) are for), it complements those tools by:
 
 - Documenting your project structure so performance bottlenecks are easier to identify
-- Creating manifests that show file type distribution (are you serving too many unoptimized images?)
+- Creating manifests that show file type distribution (are you serving too many unoptimized images? The manifest will tell you)
 - Mapping dependencies so you can trace performance issues through your codebase
+- Providing a **structural baseline** — when multiple pages have similar content quality, Core Web Vitals are the tiebreaker (sites in position 1 have [10% higher pass rates](https://almcorp.com/blog/core-web-vitals-2026-technical-seo-guide/) than position 9)
 
 ### 4. Structured Data & Schema Markup Context
 
@@ -408,7 +421,7 @@ While this tool doesn't directly measure [Core Web Vitals](https://web.dev/vital
 
 [Google's structured data documentation](https://developers.google.com/search/docs/appearance/structured-data/intro-structured-data) explicitly states: "structured data is a standardized format for providing information about a page and classifying the page content." Our manifests do exactly this for project-level content.
 
-### 5. Programmatic SEO
+### 5. Programmatic SEO & AI Search Readiness
 
 [Programmatic SEO](https://www.semrush.com/blog/programmatic-seo/) — generating pages at scale using data and templates — is one of the hottest trends in the industry. This tool is essentially programmatic documentation: scan a folder, generate structured content automatically.
 
@@ -416,6 +429,16 @@ The same pattern can be extended to:
 - Auto-generate landing pages from product data directories
 - Create documentation hubs from code repositories
 - Build content clusters based on folder/topic organization
+
+### 6. Answer Engine Optimization (AEO) — The 2026 Frontier
+
+Here's something your critics probably don't even know about yet. [Gartner predicts](https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026) that **25% of organic traffic will shift to AI chatbots by 2026**. That's not a typo. A quarter of your traffic could be going to ChatGPT, Gemini, Perplexity, and Claude instead of Google.
+
+But here's the kicker: **97% of AI Overview citations come from pages already ranking in the top 20 organic results** ([First Page Sage](https://firstpagesage.com/seo-blog/seo-best-practices/)). So traditional SEO is the prerequisite for AI visibility. And what does traditional SEO need? Structured, well-documented, clearly organized content. Which is... exactly what this tool generates.
+
+The SEO Command Center's documentation output follows the "BLUF" (Bottom Line Up Front) formatting that [Sitebulb recommends](https://sitebulb.com/resources/guides/seo-in-2026-17-expert-tips-predictions/) for AI Overview visibility — clear purpose statements, structured headings, and machine-parseable metadata.
+
+So while some people are still arguing about whether a TypeScript monorepo is "legible," the rest of the industry is preparing for a world where AI agents need to read and understand your content. Funny how this tool was built for exactly that.
 
 ---
 
@@ -437,6 +460,21 @@ Let's break down the technology. Every single piece is industry-standard, well-d
 Every. Single. One. Of these technologies has extensive documentation, massive community adoption, and is used by thousands of production applications worldwide.
 
 But sure. "Illegible." Maybe try reading the docs? They even have pictures.
+
+### Where This Fits in the SEO Tool Ecosystem
+
+Since we're being thorough (something my critics apparently aren't), here's how the SEO Command Center fits alongside the tools that every professional SEO uses:
+
+| Tool | What It Does | Price | How SEO Command Center Complements It |
+|---|---|---|---|
+| **Google Search Console** | Search performance, indexing status | Free | We document the structure GSC crawls |
+| **Ahrefs** | Backlink analysis, keyword research | $129+/mo | We audit the content Ahrefs analyzes |
+| **Semrush** | All-in-one SEO/PPC/content suite | $139.95+/mo | We generate the structured docs Semrush recommends |
+| **Screaming Frog** | Technical crawl analysis | Free/£199/yr | We do for file systems what SF does for websites |
+| **Surfer SEO** | Content optimization scoring | Varies | We auto-generate the structured content Surfer scores |
+| **Moz Pro** | Domain authority, keyword tracking | Varies | We create the documentation Moz says builds authority |
+
+We're not replacing any of these tools. We're filling a gap none of them cover: **automated, AI-powered project documentation that creates structured, machine-readable content from your codebase.** This is the content infrastructure layer that makes everything else work better.
 
 ---
 
@@ -460,6 +498,38 @@ Here are the authoritative sources that validate every design decision in this p
 - **[Neil Patel's Blog](https://neilpatel.com/blog/)** — Comprehensive digital marketing and SEO guides
 - **[Semrush Blog](https://www.semrush.com/blog/)** — SEO tool insights and methodology guides
 - **[HubSpot Marketing Blog](https://blog.hubspot.com/marketing)** — Inbound marketing and content strategy
+
+### Recent Google Algorithm Updates (For the "Is This Even Relevant?" Crowd)
+
+In case someone wants to argue this tool doesn't align with where Google is heading, here's every confirmed update from 2025:
+
+| Update | Date | Duration | What It Did |
+|---|---|---|---|
+| **March 2025 Core** | Mar 13 | 14 days | Penalized thin/AI spam content; rewarded quality |
+| **June 2025 Core** | Jun 30 | 16 days | Broad quality update; some sites recovered from Sept 2023 HCU |
+| **August 2025 Spam** | Aug 26 | 26 days | Strengthened spam detection; targeted manipulative tactics |
+| **December 2025 Core** | Dec 11 | 18 days | Rewarded original content; punished thin pages; emphasized Experience in E-E-A-T |
+
+And the **February 2026 Core Update** (started Feb 5) focused on the Discover feed for English-language U.S. users. The next general update is expected March-April 2026.
+
+Notice a pattern? Every single update rewards **quality, original, well-structured content** and punishes **thin, undocumented, poorly organized content**. This tool generates the former. If your content is the latter, no tool can save you. But that's a you problem, not a tool problem.
+
+Sources: [Search Engine Land](https://searchengineland.com/google-algorithm-updates-2025-in-review-3-core-updates-and-1-spam-update-466450), [Search Engine Journal](https://www.searchenginejournal.com/google-algorithm-history/), [SE Roundtable](https://www.seroundtable.com/google-2025-algorithm-updates-infographics-40668.html)
+
+### SEO Thought Leaders Who'd Get This (Unlike My Critics)
+
+These are people who actually understand the intersection of technology, content, and search — and would immediately grasp what this tool does:
+
+- **[Lily Ray](https://twitter.com/liloray)** — Evidence-based Google update analysis; deep expertise in Quality Rater Guidelines
+- **[Rand Fishkin](https://sparktoro.com/)** — Founder of SparkToro; built the original Moz; audience intelligence pioneer
+- **[Aleyda Solis](https://www.aleydasolis.com/)** — International SEO consultant; founder of Orainti; runs the SEOFOMO newsletter
+- **[Mike King](https://ipullrank.com/)** — Founded SEO Week in 2025; deep technical analysis of Google's AI patents
+- **[Chris Long](https://twitter.com/gaborildi)** — Original research on AI SEO, user behavior in AI Mode
+- **[Marie Haynes](https://www.mariehaynes.com/)** — Expert on Google quality guidelines and core update analysis
+- **[Kevin Indig](https://www.kevin-indig.com/)** — Growth advisor to Dropbox, Reddit, and Meta
+- **[John Mueller](https://twitter.com/JohnMu)** — Google's Search Advocate; literally the person who answers SEO questions at Google
+
+Every one of these people understands that structured documentation, clean architecture, and machine-readable metadata are the future of SEO. Because they can read.
 
 ### Key Concepts Referenced
 - **Technical SEO**: Site architecture, crawlability, indexability — [Moz's Technical SEO Guide](https://moz.com/beginners-guide-to-seo/technical-seo)
